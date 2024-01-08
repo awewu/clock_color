@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间的颜色魔法</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        .font {
+            width: 100%;
+            height: 100vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10vh;
+        }
+    </style>
+    <script>
+        // 颜色
+        var color = 0;
+        // 主要执行代码
+        function act() {
+            // 获取当前秒级时间戳，算出颜色值
+            var currentMills = parseInt(Date.now() / 1000);
+            color = currentMills % 1000000;
+            var colorText = padZero(6, color.toString());
+            // 修改属性
+            document.getElementsByClassName("font")[0].innerHTML = colorText;
+            colorEle = document.getElementsByTagName("body")[0].style.backgroundColor=colorText;
+        }
+
+        // 补位函数，转换成颜色字符串
+        function padZero(length, str) {
+            if (str.length < length) {
+                return '#' + '0'.repeat(length - str.length) + str;
+            } else {
+                return '#' + str;
+            }
+        }
+
+        // 初始化任务，加载文件时执行
+        function initial() {
+            act();
+        }
+
+        // 每秒执行一次换色
+        var intervalID = setInterval(act, 1000);
+    </script>
+</head>
+<body onload="initial()">
+    <div class="font"></div>
+</body>
+</html>
